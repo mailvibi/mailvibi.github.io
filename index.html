@@ -1,1 +1,26 @@
-hello
+<!DOCTYPE html>
+<html>
+<body>
+
+<script>
+var v = 1;
+var colors = ["aqua", "blueviolet", "black", "brown", "red", "blue", "green", "cyan", "deeppink", "magenta", "grey", "olive"];
+function myFunction() {
+	if (typeof myFunction.v == 'undefined') {
+		myFunction.v = 0;
+	}
+	document.body.style.backgroundColor = colors[myFunction.v];
+	++myFunction.v;
+	if (myFunction.v == colors.length)
+		myFunction.v = 0;
+}
+
+document.onkeypress = function (e) {
+	myFunction();
+//	document.body.style.backgroundColor = colors[v];
+    // use e.keyCode
+};
+</script>
+
+</body>
+</html>
