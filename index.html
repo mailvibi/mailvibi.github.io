@@ -5,6 +5,7 @@
 <script>
 var v = 1;
 var colors = ["aqua", "blueviolet", "black", "brown", "red", "blue", "green", "cyan", "deeppink", "magenta", "grey", "olive"];
+
 function myFunction() {
 	if (typeof myFunction.v == 'undefined') {
 		myFunction.v = 0;
@@ -15,6 +16,9 @@ function myFunction() {
 		myFunction.v = 0;
 }
 
+window.addEventListener("click", function(event) {
+	myFunction();
+});
 document.onkeypress = function (e) {
 	myFunction();
 //	document.body.style.backgroundColor = colors[v];
