@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>JSON Template Processor</title>
+  <style>
+    .processed-template {
+      display: none;
+    }
+  </style>
+</head>
+<body>
+  <h1>JSON Template Processor</h1>
+  <p>Upload your JSON file and template HTML file.</p>
+  <form id="file-upload-form">
+    <label for="json-file">JSON File:</label>
+    <input type="file" id="json-file" name="json-file" multiple>
+    <label for="template-file">Template File:</label>
+    <input type="file" id="template-file" name="template-file" multiple>
+    <button id="process-button">Process</button>
+  </form>
+  <div id="processed-template" class="processed-template"></div>
+  <script src="index.js"></script>
+</body>
+</html>
