@@ -1,29 +1,45 @@
 <!DOCTYPE html>
 <html>
 <body>
-
-<script>
-var v = 1;
-var colors = ["aqua", "blueviolet", "black", "brown", "red", "blue", "green", "cyan", "deeppink", "magenta", "grey", "olive"];
-
-function myFunction() {
-	if (typeof myFunction.v == 'undefined') {
-		myFunction.v = 0;
+<style>
+	table, td, tr {
+	            border: 1px solid rgb(0,0,0);
 	}
-	document.body.style.backgroundColor = colors[myFunction.v];
-	++myFunction.v;
-	if (myFunction.v == colors.length)
-		myFunction.v = 0;
-}
+</style>
+<form>
+	<label> Questions : </label>
+	<input type="number" id='qnums_tb' value=20>
+	<label> Max Sum : </label>
+	<input type="number" id='maxq_tb' value=1000>
+	<input type="button" id='ipbutton' value='click to generate questions' onclick='createtable();'>
 
-window.addEventListener("click", function(event) {
-	myFunction();
-});
-document.onkeypress = function (e) {
-	myFunction();
-//	document.body.style.backgroundColor = colors[v];
-    // use e.keyCode
-};
+
+</form>
+<script>
+	function addq(limit = 1000) {
+	    let v1 = Math.floor(Math.random() * limit);
+	    let v2 = Math.floor(Math.random() * (limit - v1));
+	    let sum = v1 + v2;
+	    let ret =  v1.toString() + " + " + v2.toString() + " = " + sum.toString();
+	    //alert(ret);
+	    return ret;
+	}
+	function createtable() {
+		//let table = document.getElementById("myTable");
+		let table = document.createElement('table');
+		let ques = document.getElementById('qnums_tb').value;
+		let limit = document.getElementById('maxq_tb').value;
+		if (ques == 0)
+			ques = 20;
+		if (limit == 0)
+			limit = 1000;
+		for (let i = 0 ; i < ques ; i++) {
+			let row = table.insertRow();
+			let cell1 = row.insertCell(0);
+			cell1.innerHTML = addq(limit);
+		}
+		document.body.append(table);
+	}
 </script>
 
 </body>
