@@ -8,18 +8,12 @@
 </head>
 <body>
     <input type="file" id="jsonInput" accept=".json">
-    <input type="file" id="templateInput" accept=".html">
-    <button onclick="uploadFiles()">Upload JSON and Template</button>
-    <button onclick="processTemplate()" disabled>Process Template</button>
-    <button onclick="downloadResult()" disabled>Download Result</button>
+    <input type="file" id="templateInput" accept=".html,.htm">
+    <button onclick="processTemplate()" disabled id="ptbutton">Process Template</button>
+    <button onclick="downloadResult()" disabled id="dlbutton">Download Result</button>
 
     <script>
     let jsonData, templateContent, processedResult;
-
-    function uploadFiles() {
-        document.getElementById('jsonInput').click();
-        document.getElementById('templateInput').click();
-    }
 
     document.getElementById('jsonInput').addEventListener('change', function(event) {
         const file = event.target.files[0];
@@ -27,6 +21,7 @@
         reader.onload = function(e) {
             jsonData = JSON.parse(e.target.result);
             checkFilesUploaded();
+            console.log("json input uploaded");
         };
         reader.readAsText(file);
     });
@@ -37,19 +32,19 @@
         reader.onload = function(e) {
             templateContent = e.target.result;
             checkFilesUploaded();
+            console.log("template input uploaded");
         };
         reader.readAsText(file);
     });
 
     function checkFilesUploaded() {
         if (jsonData && templateContent) {
-            document.querySelector('button:nth-of-type(2)').disabled = false;
+            document.getElementById("ptbutton").disabled = false;
         }
     }
 
     function processTemplate() {
         processedResult = Mustache.render(templateContent, jsonData);
-        document.querySelector('button:nth-of-type(3)').disabled = false;
     }
 
     function downloadResult() {
