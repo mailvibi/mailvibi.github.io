@@ -1,26 +1,68 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>JSON Template Processor</title>
-  <style>
-    .processed-template {
-      display: none;
-    }
-  </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>JSON and Mustache Template Processor</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/mustache.js/4.1.0/mustache.min.js"></script>
 </head>
 <body>
-  <h1>JSON Template Processor</h1>
-  <p>Upload your JSON file and template HTML file.</p>
-  <form id="file-upload-form">
-    <label for="json-file">JSON File:</label>
-    <input type="file" id="json-file" name="json-file" multiple>
-    <label for="template-file">Template File:</label>
-    <input type="file" id="template-file" name="template-file" multiple>
-    <button id="process-button">Process</button>
-  </form>
-  <div id="processed-template" class="processed-template"></div>
-  <script src="index.js"></script>
+    <input type="file" id="jsonInput" accept=".json" style="display: none;">
+    <input type="file" id="templateInput" accept=".html" style="display: none;">
+    <button onclick="uploadFiles()">Upload JSON and Template</button>
+    <button onclick="processTemplate()" disabled>Process Template</button>
+    <button onclick="downloadResult()" disabled>Download Result</button>
+
+    <script>
+    let jsonData, templateContent, processedResult;
+
+    function uploadFiles() {
+        document.getElementById('jsonInput').click();
+        document.getElementById('templateInput').click();
+    }
+
+    document.getElementById('jsonInput').addEventListener('change', function(event) {
+        const file = event.target.files[0];
+        const reader = new FileReader();
+        reader.onload = function(e) {
+            jsonData = JSON.parse(e.target.result);
+            checkFilesUploaded();
+        };
+        reader.readAsText(file);
+    });
+
+    document.getElementById('templateInput').addEventListener('change', function(event) {
+        const file = event.target.files[0];
+        const reader = new FileReader();
+        reader.onload = function(e) {
+            templateContent = e.target.result;
+            checkFilesUploaded();
+        };
+        reader.readAsText(file);
+    });
+
+    function checkFilesUploaded() {
+        if (jsonData && templateContent) {
+            document.querySelector('button:nth-of-type(2)').disabled = false;
+        }
+    }
+
+    function processTemplate() {
+        processedResult = Mustache.render(templateContent, jsonData);
+        document.querySelector('button:nth-of-type(3)').disabled = false;
+    }
+
+    function downloadResult() {
+        const blob = new Blob([processedResult], {type: 'text/html'});
+        const url = URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = 'processed_template.html';
+        document.body.appendChild(a);
+        a.click();
+        document.body.removeChild(a);
+        URL.revokeObjectURL(url);
+    }
+    </script>
 </body>
 </html>
