@@ -8,6 +8,9 @@ tags:
   - webassembly
   - security
   - devtools
+  - certificates
+  - x509
+  - TLS
 ---
 
 # I Was Tired of Typing OpenSSL Commands. So I Built a Certificate Generator in Rust
